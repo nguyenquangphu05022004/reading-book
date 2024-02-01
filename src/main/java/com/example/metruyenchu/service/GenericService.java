@@ -5,11 +5,11 @@ import com.example.metruyenchu.dto.UserDto;
 import com.example.metruyenchu.exception.ResourceNotFoundException;
 import com.example.metruyenchu.repository.UserRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 public class GenericService {
 
      public static <T> T findOneById(
