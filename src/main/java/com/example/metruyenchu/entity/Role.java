@@ -5,6 +5,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "roles")
 public class Role {
@@ -14,5 +17,5 @@ public class Role {
     private String code;
 
     @ManyToMany(mappedBy = "roles")
-    private User user;
+    private List<User> user = new ArrayList<>();
 }

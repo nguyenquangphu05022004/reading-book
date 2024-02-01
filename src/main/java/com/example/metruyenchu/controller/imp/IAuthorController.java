@@ -32,7 +32,7 @@ public class IAuthorController implements GenericController<AuthorDto> {
     }
 
     @Override
-    @PutMapping("/authors/{id")
+    @PutMapping("/authors/{id}")
     public AuthorDto update(AuthorDto object, @PathVariable("Id") Long id) {
         object.setId(id);
         return authorService.saveData(object);

@@ -21,7 +21,7 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns  = @JoinColumn(name = "role_id")
     )
-    private Set<Role> roles = new HashSet<>();
+    private List<Role> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "userComment")
     private List<Comment> comments = new ArrayList<>();
