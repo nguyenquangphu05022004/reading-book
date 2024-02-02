@@ -9,12 +9,21 @@ import org.springframework.stereotype.Component;
 public class IAuthorConvert implements GenericConvert<Author, AuthorDto> {
     @Override
     public Author toEntity(AuthorDto authorDto) {
-        return null;
+        Author author = Author.builder()
+                .fullNameEN(authorDto.getFullNameEN())
+                .fullNameVN(authorDto.getFullNameVN())
+                .build();
+        return author;
     }
 
     @Override
     public AuthorDto toDto(Author author) {
-        return null;
+        AuthorDto authorDto = AuthorDto.builder()
+                .fullNameEN(author.getFullNameEN())
+                .fullNameVN(author.getFullNameVN())
+                .id(author.getId())
+                .build();
+        return authorDto;
     }
 
     @Override

@@ -9,12 +9,23 @@ import org.springframework.stereotype.Component;
 
     @Override
     public Book toEntity(BookDto bookDto) {
-        return null;
+        Book book = Book.builder()
+                .bookName(bookDto.getBookName())
+                .shortDescription(bookDto.getShortDescription())
+                .thumbnail(bookDto.getThumbnail())
+                .build();
+        return book;
     }
 
     @Override
     public BookDto toDto(Book book) {
-        return null;
+        BookDto bookDto = BookDto.builder()
+                .bookName(book.getBookName())
+                .thumbnail(book.getThumbnail())
+                .shortDescription(book.getShortDescription())
+                .id(book.getId())
+                .build();
+        return bookDto;
     }
 
     @Override

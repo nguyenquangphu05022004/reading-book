@@ -1,13 +1,19 @@
 package com.example.metruyenchu.dto;
 
+import com.example.metruyenchu.entity.Book;
+import lombok.*;
+
+import java.util.Set;
+@NoArgsConstructor
+@Setter
+@Getter
+@AllArgsConstructor
+@Builder
 public class AuthorDto {
     private Long id;
+    private String fullNameVN;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String fullNameEN;
 
-    public Long getId() {
-        return id;
-    }
+    private Set<Book> bookList;
 }

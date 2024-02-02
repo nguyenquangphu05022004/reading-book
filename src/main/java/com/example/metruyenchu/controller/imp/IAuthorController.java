@@ -21,7 +21,7 @@ public class IAuthorController implements GenericController<AuthorDto> {
 
     @Override
     @PostMapping("/authors")
-    public AuthorDto create(AuthorDto object) {
+    public AuthorDto create(@RequestBody AuthorDto object) {
         return authorService.saveData(object);
     }
 
@@ -33,7 +33,7 @@ public class IAuthorController implements GenericController<AuthorDto> {
 
     @Override
     @PutMapping("/authors/{id}")
-    public AuthorDto update(AuthorDto object, @PathVariable("Id") Long id) {
+    public AuthorDto update(@RequestBody AuthorDto object, @PathVariable("Id") Long id) {
         object.setId(id);
         return authorService.saveData(object);
     }

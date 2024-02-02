@@ -9,17 +9,20 @@ import org.springframework.stereotype.Component;
 public class IRoleConvert implements GenericConvert<Role, RoleDto> {
     @Override
     public Role toEntity(RoleDto roleDto) {
-        return null;
+        Role role = new Role(roleDto.getCode());
+        return role;
     }
 
     @Override
     public RoleDto toDto(Role role) {
-        return null;
+        RoleDto roleDto = new RoleDto(role.getId(), role.getCode());
+        return roleDto;
     }
 
     @Override
     public Role toEntity(Role role, RoleDto roleDto) {
-        return null;
+        role.setCode(roleDto.getCode());
+        return role;
     }
 
     @Override

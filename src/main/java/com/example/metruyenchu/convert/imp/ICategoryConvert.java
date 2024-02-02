@@ -9,12 +9,19 @@ import org.springframework.stereotype.Component;
 public class ICategoryConvert implements GenericConvert<Category, CategoryDto> {
     @Override
     public Category toEntity(CategoryDto categoryDto) {
-        return null;
+        Category category = Category.builder()
+                .categoryName(categoryDto.getCategoryName())
+                .build();
+        return category;
     }
 
     @Override
     public CategoryDto toDto(Category category) {
-        return null;
+        CategoryDto categoryDto = CategoryDto.builder()
+                .categoryName(category.getCategoryName())
+                .id(category.getId())
+                .build();
+        return categoryDto;
     }
 
     @Override

@@ -5,15 +5,25 @@ import com.example.metruyenchu.dto.ChapterDto;
 import com.example.metruyenchu.entity.Chapter;
 import org.springframework.stereotype.Component;
 
-@Component public class IChapterConvert implements GenericConvert<Chapter, ChapterDto> {
+@Component
+public class IChapterConvert implements GenericConvert<Chapter, ChapterDto> {
     @Override
     public Chapter toEntity(ChapterDto chapterDto) {
-        return null;
+        Chapter chapter = Chapter.builder()
+                .chapterContent(chapterDto.getContent())
+                .chapterName(chapterDto.getChapterName())
+                .build();
+        return chapter;
     }
 
     @Override
     public ChapterDto toDto(Chapter chapter) {
-        return null;
+        ChapterDto chapterDto = ChapterDto.builder()
+                .id(chapter.getId())
+                .content(chapter.getChapterContent())
+                .numberOfChapter(chapter.getNumberOfChapter())
+                .build();
+        return chapterDto;
     }
 
     @Override

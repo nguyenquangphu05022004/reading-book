@@ -1,6 +1,7 @@
 package com.example.metruyenchu.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -9,17 +10,22 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
+@NoArgsConstructor
+@Setter
+@Getter
+@AllArgsConstructor
+@Builder
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Embedded
     private Account account;
 
     @ManyToMany
     @JoinTable(name = "user_role",
-        joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns  = @JoinColumn(name = "role_id")
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> roles = new ArrayList<>();
 
@@ -29,11 +35,11 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Evaluation> evaluations = new ArrayList<>();
 
-
     @Embeddable
     static class Account {
         private String username;
         private String password;
     }
+
 
 }

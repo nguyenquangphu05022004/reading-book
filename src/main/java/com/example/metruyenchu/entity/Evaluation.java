@@ -1,12 +1,18 @@
 package com.example.metruyenchu.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Table(name = "evalutions")
+@NoArgsConstructor
+@Setter
+@Getter
+@AllArgsConstructor
+@Builder
 public class Evaluation {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
