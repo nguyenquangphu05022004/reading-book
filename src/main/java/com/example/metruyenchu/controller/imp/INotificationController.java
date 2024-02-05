@@ -20,7 +20,7 @@ public class INotificationController implements GenericController<NotificationDt
     }
 
     @Override
-    @PostMapping("/notifications")
+    @PostMapping("/notifications/{userId}")
     public NotificationDto create(NotificationDto object) {
         return notificationService.saveData(object);
     }
