@@ -3,6 +3,8 @@ package com.example.metruyenchu.dto;
 import com.example.metruyenchu.entity.Book;
 import lombok.*;
 
+import java.util.Set;
+
 @NoArgsConstructor
 @Setter
 @Getter
@@ -11,5 +13,5 @@ import lombok.*;
 public class CategoryDto {
     private Long id;
     private String categoryName;
-    private BookDto book;
+    private Set<BookDto> bookDtos;
 }

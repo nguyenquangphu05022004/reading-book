@@ -4,8 +4,7 @@ import com.example.metruyenchu.controller.GenericController;
 import com.example.metruyenchu.dto.CategoryDto;
 import com.example.metruyenchu.service.imp.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,22 +19,26 @@ public class ICategoryController implements GenericController<CategoryDto> {
     }
 
     @Override
-    public CategoryDto create(CategoryDto object) {
+    @PostMapping("/categories")
+    public CategoryDto create(@RequestBody CategoryDto object) {
         return categoryService.saveData(object);
     }
 
     @Override
-    public void delete(Long id) {
+    @DeleteMapping("/categories/{id}")
+    public void delete(@PathVariable Long id) {
         categoryService.delete(id);
     }
 
     @Override
-    public CategoryDto update(CategoryDto object, Long id) {
+    @PutMapping("/categories/{id}")
+    public CategoryDto update(@RequestBody CategoryDto object,@PathVariable Long id) {
         object.setId(id);
         return categoryService.saveData(object);
     }
 
     @Override
+    @GetMapping("/categories")
     public List<CategoryDto> listObject() {
         return categoryService.recordOfList();
     }

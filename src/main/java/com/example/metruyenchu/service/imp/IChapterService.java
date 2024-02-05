@@ -2,7 +2,7 @@ package com.example.metruyenchu.service.imp;
 
 import com.example.metruyenchu.convert.imp.IChapterConvert;
 import com.example.metruyenchu.dto.ChapterDto;
-import com.example.metruyenchu.entity.Book;
+import com.example.metruyenchu.dto.NotificationDto;
 import com.example.metruyenchu.entity.Chapter;
 import com.example.metruyenchu.entity.Notification;
 import com.example.metruyenchu.repository.BookRepository;
@@ -34,16 +34,13 @@ public class IChapterService implements GenericCRUDService<ChapterDto> {
 
     @Override
     public ChapterDto saveData(ChapterDto data) {
-        Book book = GenericService.findOneById
-                (bookRepository, data.getBookDto().getId(),Book.class);
+
         ChapterDto chapterDto = GenericService.saveData(
                 data, data.getId(), iChapterConvert,
                 Chapter.class, chapterRepository
         );
 
-        setMessageNotification(book);
-        Notification notification = book.getNotification();
-
+        setMessageNotification(chapterDto);
         return chapterDto;
 
     }
@@ -60,11 +57,25 @@ public class IChapterService implements GenericCRUDService<ChapterDto> {
     }
 
 
-    private void setMessageNotification(Book book) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(book.getBookName() + " ");
-        builder.append("đã ra chương mới.");
-        book.getNotification().setMessage(builder.toString());
+    private void setMessageNotification(ChapterDto chapterDto) {
+        List<Notification> notifications = notificationRepository.
+                findAllByBookIdAndAndHasNotificated(
+                        chapterDto.getBookDto().getId(),
+                        true);
+
+        notifications =
+                notifications.stream().map(noti -> {
+                    StringBuilder builder = new StringBuilder();
+                    builder.append(noti.getBook().getBookNameVn());
+                    builder.append(" vừa ra chương mới nhất: " +
+                            noti.getBook().getChapters().size());
+                    noti.setMessage(builder.toString());
+                    return noti;
+                }).toList();
+
+        notificationRepository.saveAll(notifications);
+
+
     }
 
 }

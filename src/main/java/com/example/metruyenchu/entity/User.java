@@ -19,6 +19,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Embedded
     private Account account;
 
@@ -35,8 +36,16 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Evaluation> evaluations = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private Set<Notification> notifications = new HashSet<>();
+
     @Embeddable
-    static class Account {
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class Account {
         private String username;
         private String password;
     }

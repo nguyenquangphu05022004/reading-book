@@ -17,11 +17,9 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "full_name_vn", columnDefinition = "nvarchar(50)")
     private String fullNameVN;
 
-    private String fullNameEN;
-
-    @OneToMany
-    @JoinColumn(name = "book_id")
+    @OneToMany(mappedBy = "author")
     private Set<Book> bookList;
 }

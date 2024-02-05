@@ -1,7 +1,11 @@
 package com.example.metruyenchu.entity;
 
+import com.example.metruyenchu.dto.BookDto;
+import com.example.metruyenchu.dto.CategoryDto;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "categories")
@@ -15,10 +19,10 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(columnDefinition = "NVARCHAR(100)")
     private String categoryName;
 
-    @ManyToOne
-    @JoinColumn(name = "book_id")
-    private Book book;
+    @ManyToMany(mappedBy = "categories")
+    private List<Book> books;
 
 }

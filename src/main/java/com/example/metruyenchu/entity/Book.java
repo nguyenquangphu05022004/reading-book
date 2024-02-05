@@ -18,8 +18,14 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String bookName;
 
+    @Column(name = "book_name_vn", columnDefinition = "NVARCHAR(150)")
+    private String bookNameVn;
+
+    @Column(name = "book_name_en", columnDefinition = "VARCHAR(150)")
+    private String bookNameEn;
+
+    @Column(columnDefinition = "TEXT")
     private String shortDescription;
 
     private String thumbnail;
@@ -27,10 +33,16 @@ public class Book {
     @OneToMany(mappedBy = "book")
     private Set<Chapter> chapters = new HashSet<>();
 
-    @OneToOne
-    private Notification notification;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
 
     @OneToMany(mappedBy = "book")
+    private Set<Notification> notifications = new HashSet<>();
+
+   @ManyToMany
+   @JoinTable(name = "book_category", joinColumns = @JoinColumn(name = "book_id"),
+   inverseJoinColumns = @JoinColumn(name =  "category_id"))
     private Set<Category> categories = new HashSet<>();
 
     @OneToMany(mappedBy = "book")

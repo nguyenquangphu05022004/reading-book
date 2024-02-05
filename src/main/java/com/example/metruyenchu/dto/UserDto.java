@@ -1,10 +1,5 @@
 package com.example.metruyenchu.dto;
 
-import com.example.metruyenchu.entity.Comment;
-import com.example.metruyenchu.entity.Evaluation;
-import com.example.metruyenchu.entity.Role;
-import com.example.metruyenchu.entity.User;
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -20,11 +15,13 @@ public class UserDto {
     private AccountDto account;
 
 
-    private List<Role> roles = new ArrayList<>();
+    private List<RoleDto> roles = new ArrayList<>();
 
-    private List<Comment> comments = new ArrayList<>();
+    private List<CommentDto> comments = new ArrayList<>();
 
-    private List<Evaluation> evaluations = new ArrayList<>();
+    private List<EvaluationDto> evaluations = new ArrayList<>();
+
+    private List<NotificationDto> notificationDtos;
 
 
     @Getter
@@ -32,7 +29,7 @@ public class UserDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    static class AccountDto {
+    public static class AccountDto {
         private String username;
         private String password;
     }

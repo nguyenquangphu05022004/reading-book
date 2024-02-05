@@ -22,7 +22,7 @@ public class IChapterController implements GenericController<ChapterDto> {
 
     @Override
     @PostMapping("/chapters")
-    public ChapterDto create(ChapterDto object) {
+    public ChapterDto create(@RequestBody ChapterDto object) {
         return chapterService.saveData(object);
     }
 
@@ -34,7 +34,7 @@ public class IChapterController implements GenericController<ChapterDto> {
 
     @Override
     @PutMapping("/chapters/{id}")
-    public ChapterDto update(ChapterDto object, @PathVariable("id") Long id) {
+    public ChapterDto update(@RequestBody ChapterDto object, @PathVariable("id") Long id) {
         object.setId(id);
         return chapterService.saveData(object);
     }

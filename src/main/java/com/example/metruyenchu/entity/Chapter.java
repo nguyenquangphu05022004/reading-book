@@ -14,10 +14,13 @@ public class Chapter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(columnDefinition = "NVARCHAR(100)")
     private String chapterName;
 
     private Integer numberOfChapter;
 
+    @Column(columnDefinition = "TEXT")
     private String chapterContent;
 
     @ManyToOne

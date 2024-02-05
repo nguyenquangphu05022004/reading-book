@@ -20,7 +20,7 @@ public class IUserController implements GenericController<UserDto> {
 
     @Override
     @PostMapping("/users")
-    public UserDto create(UserDto object) {
+    public UserDto create(@RequestBody UserDto object) {
         return userService.saveData(object);
     }
 
@@ -32,7 +32,8 @@ public class IUserController implements GenericController<UserDto> {
 
     @Override
     @PutMapping("/users/{id}")
-    public UserDto update(UserDto object,@PathVariable("id") Long id) {
+    public UserDto update(UserDto object,
+                          @PathVariable("id") Long id) {
         object.setId(id);
         return userService.saveData(object);
     }

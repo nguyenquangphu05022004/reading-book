@@ -2,6 +2,9 @@ package com.example.metruyenchu.dto;
 
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @NoArgsConstructor
 @Setter
 @Getter
@@ -10,11 +13,15 @@ import lombok.*;
 public class NotificationDto {
     private Long id;
 
-    public Long getId() {
-        return id;
-    }
+    private String message;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private UserDto userDto;
+
+    private BookDto bookDto;
+
+
+    private boolean hasNotificated;
+
+    private boolean sawNotification;
+
 }

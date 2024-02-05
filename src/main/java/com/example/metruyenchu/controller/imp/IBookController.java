@@ -4,8 +4,7 @@ import com.example.metruyenchu.controller.GenericController;
 import com.example.metruyenchu.dto.BookDto;
 import com.example.metruyenchu.service.imp.IBookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,22 +21,26 @@ public class IBookController implements GenericController<BookDto> {
     }
 
     @Override
-    public BookDto create(BookDto object) {
+    @PostMapping("/books")
+    public BookDto create(@RequestBody BookDto object) {
         return bookService.saveData(object);
     }
 
     @Override
-    public void delete(Long id) {
+    @DeleteMapping("/books/{id}")
+    public void delete(@PathVariable(name = "id") Long id) {
         bookService.delete(id);
     }
 
     @Override
-    public BookDto update(BookDto object, Long id) {
+    @PutMapping("/books/{id}")
+    public BookDto update(@RequestBody BookDto object, @PathVariable(name = "id") Long id) {
         object.setId(id);
         return bookService.saveData(object);
     }
 
     @Override
+    @GetMapping("/books")
     public List<BookDto> listObject() {
         return bookService.recordOfList();
     }

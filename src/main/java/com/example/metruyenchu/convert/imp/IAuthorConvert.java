@@ -10,7 +10,6 @@ public class IAuthorConvert implements GenericConvert<Author, AuthorDto> {
     @Override
     public Author toEntity(AuthorDto authorDto) {
         Author author = Author.builder()
-                .fullNameEN(authorDto.getFullNameEN())
                 .fullNameVN(authorDto.getFullNameVN())
                 .build();
         return author;
@@ -19,7 +18,6 @@ public class IAuthorConvert implements GenericConvert<Author, AuthorDto> {
     @Override
     public AuthorDto toDto(Author author) {
         AuthorDto authorDto = AuthorDto.builder()
-                .fullNameEN(author.getFullNameEN())
                 .fullNameVN(author.getFullNameVN())
                 .id(author.getId())
                 .build();

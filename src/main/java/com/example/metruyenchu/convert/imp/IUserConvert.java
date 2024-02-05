@@ -3,18 +3,43 @@ package com.example.metruyenchu.convert.imp;
 import com.example.metruyenchu.convert.GenericConvert;
 import com.example.metruyenchu.dto.UserDto;
 import com.example.metruyenchu.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class IUserConvert implements GenericConvert<User, UserDto> {
+
+    private IRoleConvert roleConvert;
+    private INotificationConvert notificationConvert;
+    @Autowired
+    public IUserConvert(IRoleConvert roleConvert,
+                        INotificationConvert notificationConvert) {
+        this.roleConvert = roleConvert;
+        this.notificationConvert = notificationConvert;
+    }
     @Override
     public User toEntity(UserDto userDto) {
-        return null;
+        User user = User.builder()
+                .account(User.Account
+                        .builder()
+                        .username(userDto.getAccount().getUsername())
+                        .password(userDto.getAccount().getPassword()).build())
+                .roles(roleConvert.toEntity(userDto.getRoles()))
+                .build();
+        return user;
     }
 
     @Override
     public UserDto toDto(User user) {
-        return null;
+        UserDto userDto =  UserDto.builder()
+                .account(UserDto.AccountDto.builder()
+                        .username(user.getAccount().getUsername())
+                        .password(user.getAccount().getPassword()).build())
+                .roles(roleConvert.toDto(user.getRoles()))
+                .id(user.getId())
+                .notificationDtos(notificationConvert.toDto(user.getNotifications().stream().toList()))
+                .build();
+        return userDto;
     }
 
     @Override

@@ -21,7 +21,7 @@ public class IRoleController implements GenericController<RoleDto> {
 
     @Override
     @PostMapping("/roles")
-    public RoleDto create(RoleDto object) {
+    public RoleDto create(@RequestBody RoleDto object) {
         return roleService.saveData(object);
     }
 

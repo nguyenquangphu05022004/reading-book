@@ -3,6 +3,9 @@ package com.example.metruyenchu.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "notifications")
 @NoArgsConstructor
@@ -17,9 +20,17 @@ public class Notification {
 
     private String message;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "book_id")
     private Book book;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    private boolean hasNotificated;
+
+    private boolean sawNotification;
 
 
 }
