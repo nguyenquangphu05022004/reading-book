@@ -33,8 +33,7 @@ public class IUserConvert implements GenericConvert<User, UserDto> {
     public UserDto toDto(User user) {
         UserDto userDto =  UserDto.builder()
                 .account(UserDto.AccountDto.builder()
-                        .username(user.getAccount().getUsername())
-                        .password(user.getAccount().getPassword()).build())
+                        .username(user.getAccount().getUsername()).build())
                 .roles(roleConvert.toDto(user.getRoles()))
                 .id(user.getId())
                 .notificationDtos(notificationConvert.toDto(user.getNotifications().stream().toList()))

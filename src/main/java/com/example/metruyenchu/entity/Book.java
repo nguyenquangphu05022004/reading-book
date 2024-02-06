@@ -47,4 +47,7 @@ public class Book {
 
     @OneToMany(mappedBy = "book")
     private List<Evaluation> evaluations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "book")
+    private List<Comment> comments;
 }

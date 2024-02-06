@@ -12,6 +12,7 @@ import com.example.metruyenchu.service.GenericCRUDService;
 import com.example.metruyenchu.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @Service
@@ -33,6 +34,7 @@ public class IChapterService implements GenericCRUDService<ChapterDto> {
     }
 
     @Override
+    @Transactional
     public ChapterDto saveData(ChapterDto data) {
 
         ChapterDto chapterDto = GenericService.saveData(

@@ -9,12 +9,9 @@ import lombok.*;
 @Builder
 public class CommentDto {
     private Long id;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String commentContent;
+    private Integer numberLikeOfComment;
+    private UserDto userDto;
+    private BookDto bookDto;
+    private EvaluationDto evaluationDto;
 }

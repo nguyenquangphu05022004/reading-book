@@ -19,9 +19,9 @@ public class Evaluation {
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @OneToOne
+    @JoinColumn(name = "comment_id")
+    private Comment comment;
 
     private float personOfCharacter;
 
@@ -29,6 +29,5 @@ public class Evaluation {
 
     private float worldLayout;
 
-    private String evalutionContent;
 
 }

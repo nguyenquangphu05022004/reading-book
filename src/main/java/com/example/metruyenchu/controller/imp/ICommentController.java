@@ -4,6 +4,8 @@ import com.example.metruyenchu.controller.GenericController;
 import com.example.metruyenchu.dto.CommentDto;
 import com.example.metruyenchu.service.imp.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +22,8 @@ public class ICommentController implements GenericController<CommentDto> {
     }
 
     @Override
-    public CommentDto create(CommentDto object) {
+    @PostMapping("/comments")
+    public CommentDto create(@RequestBody CommentDto object) {
         return commentService.saveData(object);
     }
 

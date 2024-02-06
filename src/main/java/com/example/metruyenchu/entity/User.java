@@ -33,8 +33,6 @@ public class User {
     @OneToMany(mappedBy = "userComment")
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Evaluation> evaluations = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private Set<Notification> notifications = new HashSet<>();

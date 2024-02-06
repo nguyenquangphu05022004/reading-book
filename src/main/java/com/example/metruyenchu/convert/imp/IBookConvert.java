@@ -19,13 +19,19 @@ import java.util.Set;
     private ICategoryConvert categoryConvert;
     private IAuthorConvert authorConvert;
     private IChapterConvert chapterConvert;
+    private IEvaluationConvert evaluationConvert;
+    private ICommentConvert commentConvert;
     @Autowired
     public IBookConvert(ICategoryConvert categoryConvert,
                         IAuthorConvert authorConvert,
-                        IChapterConvert chapterConvert) {
+                        IChapterConvert chapterConvert,
+                        IEvaluationConvert evaluationConvert,
+                        ICommentConvert commentConvert) {
         this.categoryConvert = categoryConvert;
         this.authorConvert = authorConvert;
         this.chapterConvert = chapterConvert;
+        this.evaluationConvert = evaluationConvert;
+        this.commentConvert =commentConvert;
     }
 
     @Override
@@ -64,6 +70,8 @@ import java.util.Set;
                 .categories(categoryDtos)
                 .authorDto(authorConvert.toDto(book.getAuthor()))
                 .chapters(chapterDtos)
+                .evaluations(evaluationConvert.toDto(book.getEvaluations()))
+                .commentDtos(commentConvert.toDto(book.getComments()))
                 .build();
         return bookDto;
     }

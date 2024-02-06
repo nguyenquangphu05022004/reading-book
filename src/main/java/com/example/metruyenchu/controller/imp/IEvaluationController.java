@@ -21,7 +21,7 @@ public class IEvaluationController implements GenericController<EvaluationDto> {
 
     @Override
     @PostMapping("/evaluations")
-    public EvaluationDto create(EvaluationDto object) {
+    public EvaluationDto create(@RequestBody EvaluationDto object) {
         return evalutionService.saveData(object);
     }
 
@@ -39,7 +39,7 @@ public class IEvaluationController implements GenericController<EvaluationDto> {
     }
 
     @Override
-    @GetMapping("/evalutions")
+    @GetMapping("/evaluations")
     public List<EvaluationDto> listObject() {
         return evalutionService.recordOfList();
     }

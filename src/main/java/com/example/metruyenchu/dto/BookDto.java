@@ -28,4 +28,6 @@ public class BookDto {
     private Set<CategoryDto> categories = new HashSet<>();
 
     private List<EvaluationDto> evaluations = new ArrayList<>();
+
+    private List<CommentDto> commentDtos;
 }

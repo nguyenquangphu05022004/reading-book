@@ -14,11 +14,14 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String commentContent;
     private Integer numberLikeOfComment;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User userComment;
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private Book book;
+    @OneToOne(mappedBy = "comment")
+    private Evaluation evaluation;
 }

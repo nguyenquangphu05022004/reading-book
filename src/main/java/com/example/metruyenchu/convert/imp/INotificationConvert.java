@@ -18,13 +18,11 @@ import java.util.List;
 public class INotificationConvert implements GenericConvert<Notification, NotificationDto>,
         GenericConvertTw<Notification, NotificationDto> {
 
-    private IUserConvert userConvert;
+
     private IBookConvert bookConvert;
 
     @Autowired
-    public INotificationConvert(IUserConvert userConvert,
-                                IBookConvert bookConvert) {
-        this.userConvert = userConvert;
+    public INotificationConvert(IBookConvert bookConvert) {
         this.bookConvert = bookConvert;
     }
 
@@ -45,10 +43,7 @@ public class INotificationConvert implements GenericConvert<Notification, Notifi
         NotificationDto notificationDto  = NotificationDto
                 .builder()
                 .message(notification.getMessage())
-                .userDto(UserDto.builder()
-                        .id(notification.getUser().getId()).build())
-                .bookDto(BookDto.builder()
-                        .id(notification.getBook().getId()).build())
+                .bookDto(bookConvert.toDto(notification.getBook()))
                 .hasNotificated(notification.isHasNotificated())
                 .sawNotification(notification.isSawNotification())
                 .build();
@@ -74,15 +69,7 @@ public class INotificationConvert implements GenericConvert<Notification, Notifi
     public List<NotificationDto> toDto(List<Notification> list) {
         List<NotificationDto> notificationDtos =
                 list.stream().map((entity) -> {
-                    NotificationDto notificationDto = NotificationDto
-                            .builder()
-                            .sawNotification(entity.isSawNotification())
-                            .bookDto(bookConvert.toDto(entity.getBook()))
-                            .userDto(userConvert.toDto(entity.getUser()))
-                            .message(entity.getMessage())
-                            .id(entity.getId())
-                            .build();
-                    return notificationDto;
+                    return toDto(entity);
                 }).toList();
         return notificationDtos;
     }

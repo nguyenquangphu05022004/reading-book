@@ -56,6 +56,8 @@ public class IChapterConvert implements GenericConvert<Chapter, ChapterDto>,
 
     @Override
     public List<ChapterDto> toDto(List<Chapter> list) {
-        return null;
+        return list.stream().map((e) -> {
+            return toDto(e);
+        }).toList();
     }
 }
