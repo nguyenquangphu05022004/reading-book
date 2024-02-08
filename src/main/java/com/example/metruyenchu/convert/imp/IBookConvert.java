@@ -1,6 +1,7 @@
 package com.example.metruyenchu.convert.imp;
 
 import com.example.metruyenchu.convert.GenericConvert;
+import com.example.metruyenchu.convert.GenericConvertTw;
 import com.example.metruyenchu.dto.BookDto;
 import com.example.metruyenchu.dto.CategoryDto;
 import com.example.metruyenchu.dto.ChapterDto;
@@ -11,9 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-@Component public class IBookConvert implements GenericConvert<Book, BookDto> {
+@Component public class IBookConvert implements GenericConvert<Book, BookDto>, GenericConvertTw<Book, BookDto> {
 
 
     private ICategoryConvert categoryConvert;
@@ -84,5 +86,17 @@ import java.util.Set;
     @Override
     public BookDto toDto(BookDto bookDto, Book book) {
         return null;
+    }
+
+    @Override
+    public List<Book> toEntity(List<BookDto> list) {
+        return list.stream().map(dto -> {
+            return Book.builder().id(dto.getId()).build();
+        }).toList();
+    }
+
+    @Override
+    public List<BookDto> toDto(List<Book> list) {
+        return list.stream().map(e -> toDto(e)).toList();
     }
 }

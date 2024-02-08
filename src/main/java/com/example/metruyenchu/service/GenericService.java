@@ -21,21 +21,6 @@ public class GenericService {
          return data.orElseThrow(() -> new ResourceNotFoundException(tClass + " not found id: " + id));
      }
 
-    private static <T> T update(JpaRepository r,
-                                T data, Long id,
-                                Class<?> entityClass,
-                                GenericConvert genericConvert) {
-        Object oldT = GenericService.findOneById(r, id, entityClass);
-        T value = (T) genericConvert.toDto(data, oldT);
-        return insert(value, genericConvert, r);
-    }
-
-    private static <T> T insert(T data, GenericConvert genericConvert,
-                               JpaRepository r) {
-        return (T) genericConvert
-                .toDto(r.save(genericConvert.toEntity(data)));
-    }
-
     public static <E, D> D saveData(
             D data, Long id, GenericConvert genericConvert,
             Class<E> entityClass, JpaRepository jpaRepository
@@ -56,5 +41,25 @@ public class GenericService {
          return list.stream().map((e) -> {
              return (D)convert.toDto(e);
          }).collect(Collectors.toList());
+    }
+
+    public static <E> List<E> recordOfList(JpaRepository repository) {
+        List<E> list = repository.findAll();
+        return list;
+    }
+
+    private static <T> T update(JpaRepository r,
+                                T data, Long id,
+                                Class<?> entityClass,
+                                GenericConvert genericConvert) {
+        Object oldT = GenericService.findOneById(r, id, entityClass);
+        oldT = genericConvert.toEntity(oldT, data);
+        return (T)genericConvert.toDto(r.save(oldT));
+    }
+
+    private static <T> T insert(T data, GenericConvert genericConvert,
+                                JpaRepository r) {
+        return (T) genericConvert
+                .toDto(r.save(genericConvert.toEntity(data)));
     }
 }

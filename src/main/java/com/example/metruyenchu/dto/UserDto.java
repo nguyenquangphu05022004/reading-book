@@ -8,12 +8,11 @@ import java.util.List;
 @Setter
 @Getter
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class UserDto {
 
     private Long id;
     private AccountDto account;
-
 
     private List<RoleDto> roles = new ArrayList<>();
 
@@ -22,6 +21,8 @@ public class UserDto {
     private List<EvaluationDto> evaluations = new ArrayList<>();
 
     private List<NotificationDto> notificationDtos;
+
+    private List<BookDto> booksFollow;
 
 
     @Getter

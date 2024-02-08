@@ -30,6 +30,9 @@ public class Book {
 
     private String thumbnail;
 
+    @OneToOne(mappedBy = "book")
+    private BookView bookView;
+
     @OneToMany(mappedBy = "book")
     private Set<Chapter> chapters = new HashSet<>();
 
@@ -50,4 +53,9 @@ public class Book {
 
     @OneToMany(mappedBy = "book")
     private List<Comment> comments;
+
+    @ManyToMany(mappedBy = "followBooks")
+    private List<User> users;
+
+    private Boolean status;
 }

@@ -14,7 +14,7 @@ import java.util.Set;
 @Setter
 @Getter
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,9 +33,14 @@ public class User {
     @OneToMany(mappedBy = "userComment")
     private List<Comment> comments = new ArrayList<>();
 
-
     @OneToMany(mappedBy = "user")
     private Set<Notification> notifications = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "user_book",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private List<Book> followBooks;
 
     @Embeddable
     @Builder

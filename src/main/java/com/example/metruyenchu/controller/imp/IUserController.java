@@ -6,6 +6,7 @@ import com.example.metruyenchu.service.imp.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.Path;
 import java.util.List;
 
 @RestController
@@ -32,8 +33,8 @@ public class IUserController implements GenericController<UserDto> {
 
     @Override
     @PutMapping("/users/{id}")
-    public UserDto update(UserDto object,
-                          @PathVariable("id") Long id) {
+    public UserDto update(@RequestBody UserDto object,
+                          @PathVariable(value = "id") Long id) {
         object.setId(id);
         return userService.saveData(object);
     }
