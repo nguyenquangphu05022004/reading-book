@@ -59,15 +59,15 @@ public class IEvaluationConvert implements GenericConvert<Evaluation, Evaluation
 
     @Override
     public List<Evaluation> toEntity(List<EvaluationDto> list) {
-        return list.stream().map((dto) -> {
+        return list != null ? list.stream().map((dto) -> {
             return toEntity(dto);
-        }).toList();
+        }).toList() : null;
     }
 
     @Override
     public List<EvaluationDto> toDto(List<Evaluation> list) {
-        return list.stream().map((e) -> {
+        return list != null ? list.stream().map((e) -> {
             return toDto(e);
-        }).toList();
+        }).toList() : null;
     }
 }

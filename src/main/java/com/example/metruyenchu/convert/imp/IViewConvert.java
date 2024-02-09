@@ -3,6 +3,8 @@ package com.example.metruyenchu.convert.imp;
 import com.example.metruyenchu.convert.GenericConvert;
 import com.example.metruyenchu.convert.GenericConvertTw;
 import com.example.metruyenchu.dto.ViewDto;
+import com.example.metruyenchu.entity.BookView;
+import com.example.metruyenchu.entity.BookViewCategory;
 import com.example.metruyenchu.entity.View;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +21,8 @@ public class IViewConvert implements GenericConvert<View, ViewDto>, GenericConve
                 .viewsByMonth(0)
                 .viewsTotal(0)
                 .viewsByWeek(0)
+                .bookView(BookView.builder().id(viewDto.getBookViewDto().getId()).build())
+                .bookViewCategory(BookViewCategory.builder().id(viewDto.getBookViewCategoryDto().getId()).build())
                 .build();
     }
 
@@ -39,11 +43,12 @@ public class IViewConvert implements GenericConvert<View, ViewDto>, GenericConve
 
     @Override
     public List<View> toEntity(List<ViewDto> list) {
-        return list.stream().map((dto) -> toEntity(dto)).toList();
+        return list != null ? list.stream().map((dto) -> toEntity(dto)).toList() : null;
     }
 
     @Override
     public List<ViewDto> toDto(List<View> list) {
         return null;
     }
+
 }

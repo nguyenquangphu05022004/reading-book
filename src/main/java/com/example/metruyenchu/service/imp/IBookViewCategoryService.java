@@ -36,7 +36,7 @@ public class IBookViewCategoryService implements GenericCRUDService<BookViewCate
 
     @Override
     public List<BookViewCategoryDto> recordOfList() {
-        return null;
+        return GenericService.recordOfList(bookViewCategoryRepository, bookViewCategoryConvert);
     }
 
 }

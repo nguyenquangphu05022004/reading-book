@@ -71,8 +71,8 @@ public class ICommentConvert implements GenericConvert<Comment, CommentDto>,
 
     @Override
     public List<CommentDto> toDto(List<Comment> list) {
-        return list.stream().map((e) -> {
+        return list != null ? list.stream().map((e) -> {
             return toDto(e);
-        }).toList();
+        }).toList() : null;
     }
 }

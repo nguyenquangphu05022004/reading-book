@@ -17,11 +17,14 @@ public class IAuthorConvert implements GenericConvert<Author, AuthorDto> {
 
     @Override
     public AuthorDto toDto(Author author) {
-        AuthorDto authorDto = AuthorDto.builder()
-                .fullNameVN(author.getFullNameVN())
-                .id(author.getId())
-                .build();
-        return authorDto;
+        if(author != null) {
+            AuthorDto authorDto = AuthorDto.builder()
+                    .fullNameVN(author.getFullNameVN())
+                    .id(author.getId())
+                    .build();
+            return authorDto;
+        }
+        return null;
     }
 
     @Override

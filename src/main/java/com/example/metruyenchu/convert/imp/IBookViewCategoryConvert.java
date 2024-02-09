@@ -21,7 +21,10 @@ public class IBookViewCategoryConvert implements GenericConvert<BookViewCategory
 
     @Override
     public BookViewCategoryDto toDto(BookViewCategory bookViewCategory) {
-        return null;
+        return BookViewCategoryDto.builder()
+                .id(bookViewCategory.getId())
+                .name(bookViewCategory.getName())
+                .build();
     }
 
     @Override

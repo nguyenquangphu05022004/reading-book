@@ -44,17 +44,15 @@ public class IBookViewService implements GenericCRUDService<BookViewDto> {
 
     public void trackView() {
         List<BookView> bookViews = GenericService.recordOfList(bookViewRepository);
-        bookViews.stream().forEach((view) -> {
+        bookViews.stream().forEach((bookView) -> {
             /**
              * date[0]:corresponding <->day</->
              * data[1]:corresponding <->month</->
              * data[2]:corresponding <->month</->
              */
             boolean[] date = {false, false, false};
-            setIsExpires(date, view);
-            for(boolean expire : date) {
-                if(expire) saveData(bookViewConvert.toDto(view));
-            }
+            setIsExpires(date, bookView);
+            saveData(bookViewConvert.toDto(bookView));
         });
     }
 
@@ -63,8 +61,17 @@ public class IBookViewService implements GenericCRUDService<BookViewDto> {
         LocalDateTime week = view.getWeek();
         LocalDateTime month = view.getMonth();
         LocalDateTime now = LocalDateTime.now();
-        if(now.getDayOfMonth() - day.getDayOfMonth() >= 1) date[0] = true;
-        if(now.getDayOfMonth() - week.getDayOfMonth() >= 7) date[1] = true;
-        if(now.getDayOfYear() - month.getDayOfYear() >= 31) date[2] = true;
+        if(now.getDayOfMonth() - day.getDayOfMonth() >= 1) {
+            date[0] = true;
+            view.setDay(LocalDateTime.now());
+        }
+        if(now.getDayOfMonth() - week.getDayOfMonth() >= 7) {
+            date[1] = true;
+            view.setWeek(LocalDateTime.now());
+        }
+        if(now.getDayOfYear() - month.getDayOfYear() >= 31) {
+            date[2] = true;
+            view.setMonth(LocalDateTime.now());
+        }
     }
 }

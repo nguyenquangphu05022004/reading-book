@@ -55,14 +55,13 @@ import java.util.Set;
 
     @Override
     public BookDto toDto(Book book) {
-
-        Set<CategoryDto> categoryDtos = new HashSet<>(categoryConvert
-                .toDto(book.getCategories().stream().toList()));
+        Set<CategoryDto> categoryDtos = new HashSet<>();
         Set<ChapterDto> chapterDtos = new HashSet<>();
-        if(book.getChapters() != null) {
-            chapterDtos = new HashSet<>(chapterConvert
-                    .toDto(book.getChapters().stream().toList()));
-        }
+        if(book.getCategories() != null ) categoryDtos =  new HashSet<>(categoryConvert
+                .toDto(book.getCategories().stream().toList()));
+        if(book.getChapters() != null) chapterDtos = new HashSet<>(chapterConvert
+                .toDto(book.getChapters().stream().toList()));
+
         BookDto bookDto = BookDto.builder()
                 .bookNameEn(book.getBookNameEn())
                 .bookNameVn(book.getBookNameVn())
