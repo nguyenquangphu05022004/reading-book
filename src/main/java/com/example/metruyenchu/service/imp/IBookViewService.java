@@ -8,6 +8,7 @@ import com.example.metruyenchu.service.GenericCRUDService;
 import com.example.metruyenchu.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,11 +18,14 @@ public class IBookViewService implements GenericCRUDService<BookViewDto> {
 
     private BookViewRepository bookViewRepository;
     private IBookViewConvert bookViewConvert;
+    private IViewService viewService;
     @Autowired
     public IBookViewService(BookViewRepository bookViewRepository,
-                            IBookViewConvert bookViewConvert) {
+                            IBookViewConvert bookViewConvert,
+                            IViewService viewService) {
         this.bookViewRepository = bookViewRepository;
         this.bookViewConvert = bookViewConvert;
+        this.viewService = viewService;
     }
 
     @Override
@@ -42,36 +46,41 @@ public class IBookViewService implements GenericCRUDService<BookViewDto> {
         return null;
     }
 
-    public void trackView() {
-        List<BookView> bookViews = GenericService.recordOfList(bookViewRepository);
-        bookViews.stream().forEach((bookView) -> {
-            /**
-             * date[0]:corresponding <->day</->
-             * data[1]:corresponding <->month</->
-             * data[2]:corresponding <->month</->
-             */
-            boolean[] date = {false, false, false};
-            setIsExpires(date, bookView);
-            saveData(bookViewConvert.toDto(bookView));
+    @Transactional
+    public void trackViews(Long bookId, Long bookViewCategoryId) {
+        List<BookView> bookViews = bookViewRepository.findAll();
+        boolean[] date = {false, false, false};
+        setIsExpiresAndViews(date, bookViews, bookId, bookViewCategoryId);
+    }
+
+
+    private void setIsExpiresAndViews(boolean[] date, List<BookView> bookViews,
+                              Long bookId, Long bookViewCategoryId) {
+        bookViews.stream().forEach((view) -> {
+            LocalDateTime day = view.getDay();
+            LocalDateTime week = view.getWeek();
+            LocalDateTime month = view.getMonth();
+            LocalDateTime now = LocalDateTime.now();
+            if (now.getDayOfMonth() - day.getDayOfMonth() >= 1 && now.getHour() - day.getHour() >= 0) {
+                date[0] = true;
+                view.setDay(LocalDateTime.now());
+            }
+            if (now.getDayOfMonth() - week.getDayOfMonth() >= 7 && now.getHour() - week.getHour() >= 0) {
+                date[1] = true;
+                view.setWeek(LocalDateTime.now());
+            }
+            if (now.getDayOfYear() - month.getDayOfYear() >= 31 && now.getHour() - month.getHour() >= 0) {
+                date[2] = true;
+                view.setMonth(LocalDateTime.now());
+            }
+            if(view.getBook().getId() == bookId) {
+                setViews(date, view, bookViewCategoryId);
+            }
+            saveData(bookViewConvert.toDto(view));
         });
     }
 
-    private void setIsExpires(boolean[] date, BookView view) {
-        LocalDateTime day = view.getDay();
-        LocalDateTime week = view.getWeek();
-        LocalDateTime month = view.getMonth();
-        LocalDateTime now = LocalDateTime.now();
-        if(now.getDayOfMonth() - day.getDayOfMonth() >= 1) {
-            date[0] = true;
-            view.setDay(LocalDateTime.now());
-        }
-        if(now.getDayOfMonth() - week.getDayOfMonth() >= 7) {
-            date[1] = true;
-            view.setWeek(LocalDateTime.now());
-        }
-        if(now.getDayOfYear() - month.getDayOfYear() >= 31) {
-            date[2] = true;
-            view.setMonth(LocalDateTime.now());
-        }
+    private void setViews(boolean[] date, BookView bookView, Long bookViewCategoryId) {
+        viewService.trackViews(date, bookView.getId(), bookViewCategoryId);
     }
 }

@@ -38,4 +38,19 @@ public class IViewService implements GenericCRUDService<ViewDto> {
     public List<ViewDto> recordOfList() {
         return null;
     }
+
+    public void trackViews(boolean date[], Long bookViewid,
+                                 Long bookViewCategoryId) {
+        //categoryBookViewId: 1(read)
+        View view = viewRepository
+                .findByBookViewIdAndBookViewCategoryId(bookViewid, bookViewCategoryId);
+        view = view.toBuilder()
+                .viewsByDay(date[0] ? 0 : view.getViewsByDay() + 1)
+                .viewsByWeek(date[1] ? 0 : view.getViewsByWeek() + 1)
+                .viewsByMonth(date[2] ? 0 : view.getViewsByMonth() + 1)
+                .viewsTotal(view.getViewsTotal() + 1)
+                .build();
+        viewRepository.save(view);
+
+    }
 }

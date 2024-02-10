@@ -2,6 +2,8 @@ package com.example.metruyenchu.convert.imp;
 
 import com.example.metruyenchu.convert.GenericConvert;
 import com.example.metruyenchu.convert.GenericConvertTw;
+import com.example.metruyenchu.dto.BookViewCategoryDto;
+import com.example.metruyenchu.dto.BookViewDto;
 import com.example.metruyenchu.dto.ViewDto;
 import com.example.metruyenchu.entity.BookView;
 import com.example.metruyenchu.entity.BookViewCategory;
@@ -28,12 +30,26 @@ public class IViewConvert implements GenericConvert<View, ViewDto>, GenericConve
 
     @Override
     public ViewDto toDto(View view) {
-        return null;
+        return ViewDto.builder()
+                .viewsTotal(view.getViewsTotal())
+                .viewsByWeek(view.getViewsByWeek())
+                .viewsByDay(view.getViewsByDay())
+                .viewsByMonth(view.getViewsByMonth())
+                .id(view.getId())
+                .bookViewDto(BookViewDto.builder().id(view.getBookView().getId()).build())
+                .bookViewCategoryDto(BookViewCategoryDto.builder().id(view.getBookViewCategory().getId()).build())
+                .build();
     }
 
     @Override
     public View toEntity(View view, ViewDto viewDto) {
-        return null;
+        view = view.toBuilder()
+                .viewsByDay(viewDto.getViewsByDay())
+                .viewsByMonth(viewDto.getViewsByMonth())
+                .viewsTotal(viewDto.getViewsTotal())
+                .viewsByWeek(viewDto.getViewsByWeek())
+                .build();
+        return view;
     }
 
     @Override
@@ -48,7 +64,7 @@ public class IViewConvert implements GenericConvert<View, ViewDto>, GenericConve
 
     @Override
     public List<ViewDto> toDto(List<View> list) {
-        return null;
+        return list != null ? list.stream().map(e -> toDto(e)).toList() : null;
     }
 
 }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "views")
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @Getter
 @AllArgsConstructor

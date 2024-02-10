@@ -40,14 +40,20 @@ public class IBookViewConvert implements GenericConvert<BookView, BookViewDto> {
                 .id(bookView.getId())
                 .week(bookView.getWeek())
                 .day(bookView.getDay())
-                .week(bookView.getWeek())
+                .month(bookView.getMonth())
+                .viewDtos(viewConvert.toDto(bookView.getViews()))
                 .build();
         return bookViewDto;
     }
 
     @Override
     public BookView toEntity(BookView bookView, BookViewDto bookViewDto) {
-        return null;
+        bookView =  bookView.toBuilder()
+                .day(bookViewDto.getDay())
+                .week(bookView.getWeek())
+                .month(bookView.getMonth())
+                .build();
+        return bookView;
     }
 
     @Override

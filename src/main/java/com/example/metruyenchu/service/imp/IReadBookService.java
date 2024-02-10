@@ -1,5 +1,6 @@
 package com.example.metruyenchu.service.imp;
 
+import com.example.metruyenchu.constant.SystemConstant;
 import com.example.metruyenchu.convert.GenericConvert;
 import com.example.metruyenchu.convert.IReadBookConvert;
 import com.example.metruyenchu.dto.ReadBookDto;
@@ -31,7 +32,7 @@ public class IReadBookService implements GenericCRUDService<ReadBookDto> {
     @Override
     @Transactional
     public ReadBookDto saveData(ReadBookDto data) {
-        bookViewService.trackView();
+        bookViewService.trackViews(data.getBookDto().getId(), SystemConstant.TRACK_VIEW_READS);
         return GenericService.saveData(
                 data, data.getId(), readBookConvert,
                 ReadBook.class, readBookRepository
