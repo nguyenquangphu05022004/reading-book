@@ -1,21 +1,27 @@
 package com.example.metruyenchu.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Table(name = "evalutions")
+@NoArgsConstructor
+@Setter
+@Getter
+@AllArgsConstructor
+@Builder
 public class Evaluation {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @OneToOne
+    @JoinColumn(name = "comment_id")
+    private Comment comment;
 
     private float personOfCharacter;
 
@@ -23,6 +29,5 @@ public class Evaluation {
 
     private float worldLayout;
 
-    private String evalutionContent;
 
 }
